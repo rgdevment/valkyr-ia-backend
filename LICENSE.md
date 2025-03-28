@@ -38,4 +38,4 @@ No se considera "uso comercial":
 ***En la medida permitida por la ley, este software no incluye garantías, y el autor no será responsable por daños derivados de su uso.***
 
 ---  
-Texto completo de PPL 3.0: https://prosperitylicense.com/versions/3.0.0.md
+Texto completo de PPL 3.0: https://prosperitylicense.com/versions/3.0.0
