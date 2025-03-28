@@ -1,0 +1,43 @@
+networks:
+  valkyr_net:
+    driver: bridge
+
+services:
+  database:
+    image: arm64v8/mariadb:11.3
+    ports:
+      - "3306:3306"
+    container_name: valkyr_db
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - valkyr_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: arm64v8/redis:7.2-alpine
+    container_name: valkyr_redis
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    networks:
+      - valkyr_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+
+volumes:
+  db_data:
+    driver: local
+  redis_data:
+    driver: local
