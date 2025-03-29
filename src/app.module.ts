@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CamerasModule } from './cameras/cameras.module';
+import { CamerasModule } from '@modules/cameras/cameras.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as mysql2 from 'mysql2';
