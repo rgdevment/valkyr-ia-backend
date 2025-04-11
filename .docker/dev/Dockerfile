@@ -17,7 +17,7 @@ COPY --chown=appuser:appuser .docker/scripts/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 COPY --chown=appuser:appuser package.json package-lock.json* ./
-RUN npm ci --include=dev --prefer-offline --no-audit --no-fund
+RUN npm ci --include=dev --prefer-offline --no-audit --no-fund && npm install -g npm@11.3.0
 
 COPY --chown=appuser:appuser . .
 
