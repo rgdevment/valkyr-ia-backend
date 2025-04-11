@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/prod/Dockerfile
+    profiles: ["production"]
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    environment:
+      NODE_ENV: production
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

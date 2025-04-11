@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/dev/Dockerfile
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+      - "${DEBUG_PORT:-9229}:${DEBUG_PORT:-9229}"
+    environment:
+      NODE_ENV: development
+      DEBUG: 'nest:*'
+      NEST_DEBUG: ${DEBUG_MODE:-false}
+      NEST_DEBUG_PORT: 9229
+      HOST: 0.0.0.0
+    volumes:
+      - .:/app:cached
+      - /app/node_modules
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - backend
+    depends_on:
+      database:
+        condition: service_started
+      redis:
+        condition: service_started
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
